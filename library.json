@@ -1,0 +1,22 @@
+{
+    "name": "AmbaSat LMIC Library",
+    "frameworks": "arduino",
+    "keywords": "sensors, ambasat, accelerometer, magnetometer, gyroscope, IMU, LSM9DS1, I2C",
+    "description": "AmbaSat LMIC Library encapsulating IBM LMIC framework for use with the AmbaSat-1 Low Earth Orbit Space Satellite",
+    "authors": [
+        {
+            "name": "AmbaSat Ltd",
+            "email": "dev@ambasat.com",
+            "url": "https://ambasat.com",
+            "maintainer": true
+        }
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/ambasat/AmbaSat-LMIC-Library"
+    },
+	"dependencies": {
+		"matthijskooijman/IBM LMIC framework": "~1.5.1"
+	},	
+    "version": "1.0.1"
+}
