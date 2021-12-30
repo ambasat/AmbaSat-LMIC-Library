@@ -5,19 +5,22 @@
 * This library is designed for use with AmbaSat-1 and is a wrapper for
 * IBM LMIC functionality 
 * 
-* Copyright (c) 2021 AmbaSat Ltd
+* Copyright (c) 2022 AmbaSat Ltd
 * https://ambasat.com
 *
 * licensed under Creative Commons Attribution-ShareAlike 3.0
 * ******************************************************************************/
 
 #include "AmbaSatLMIC.h"
+#include <EEPROM.h>
 
 bool joined = false;
 bool sleeping = false;
 
 //static osjob_t sendjob;
 static osjob_t initjob;
+
+uint32_t uplinkSequenceNo = 0; // aka FCnt
 
 // AmbaSat lmic pin mapping
 const lmic_pinmap lmic_pins = {
@@ -212,6 +215,11 @@ bool AmbaSatLMIC::setup(u4_t netid, devaddr_t devaddr, unsigned char *appskey, u
 bool AmbaSatLMIC::sendSensorPayload(uint8_t sensorType, LoraMessage message)
 {
     Serial.flush();
+    
+    EEPROM.get(0, uplinkSequenceNo);       
+    uplinkSequenceNo = uplinkSequenceNo + 1;
+    EEPROM.put(0, uplinkSequenceNo);
+    LMIC.seqnoUp = uplinkSequenceNo;
 
     LMIC_setTxData2(sensorType, message.getBytes(), message.getLength(), 0);
 
